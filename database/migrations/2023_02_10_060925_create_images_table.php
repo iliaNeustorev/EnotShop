@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->morphs('imageable');
             $table->string('name', 128)->default('nopicture.png');
-            $table->string('path',256);
+            $table->string('url', 256);
         });
     }
 

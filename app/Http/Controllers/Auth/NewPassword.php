@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use Illuminate\Support\Str;
+use Illuminate\Contracts\View\View ;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Password;
+use App\Http\Requests\Auth\PasswordReset as PasswordResetRequest;
+
+class NewPassword extends Controller
+{
+   public function create(string $token) : View
+   {
+     return view('auth.reset-password', ['token' => $token]);
+   }
+
+   public function store(PasswordResetRequest $request)
+   {
+      $data = $request->validated();
+      $status = Password::reset(
+      $data,
+      function ($user, $password) {
+          $user->forceFill([
+              'password' => Hash::make($password)
+          ])->setRememberToken(Str::random(60));
+
+          $user->save();
+
+          event(new PasswordReset($user));
+        }
+      );
+
+      return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('notification', 'password.reset')
+            : back()->withErrors(['email' => [__($status)]]);
+      }
+}

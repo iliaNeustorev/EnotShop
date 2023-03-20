@@ -21,7 +21,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
-        'status',
         'number',
         'password',
     ];
@@ -34,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'deleted_at'
     ];
 
     /**
@@ -45,8 +45,28 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function images()
+    public function image()
     {
-        return $this->morphMany(Image::class, 'imageable');
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function discount()
+    {
+        return $this->morphOne(Discount::class, 'discounteable');
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    public function promos()
+    {
+        return $this->belongsToMany(Promo::class)->withPivot('used');
+    }
+
+    public function adresses()
+    {
+        return $this->hasMany(Adress::class);
     }
 }

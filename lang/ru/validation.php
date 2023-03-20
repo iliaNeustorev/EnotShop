@@ -118,6 +118,7 @@ return [
     'url'                  => 'Значение поля :attribute имеет ошибочный формат URL.',
     'uuid'                 => 'Значение поля :attribute должно быть корректным UUID.',
     'checkArray'           => 'Выпытаетесь добавить несушествующий id',
+    'checkCountStore'      => 'Лимит количества товаров превышен',
     'custom'               => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
