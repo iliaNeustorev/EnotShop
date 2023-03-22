@@ -40,5 +40,10 @@ Route::prefix('cart')->group(function() {
 Route::prefix('profile')->group(function() {
     Route::put('/edit', [ProfileController::class, 'edit']);
     Route::get('/discount', [ProfileController::class, 'getDiscount']);
-    Route::get('/adress', [AdressController::class, 'index']);
+        Route::prefix('adress')->group(function() {
+            Route::get('/', [AdressController::class, 'index']);
+            Route::post('/', [AdressController::class, 'store']);
+            Route::put('/main', [AdressController::class, 'changeMain']);
+            Route::delete('/{id}', [AdressController::class, 'destroy']);
+        });
 });

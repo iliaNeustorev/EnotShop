@@ -19,7 +19,29 @@ export default (http) => ({
             return response.data;
         },
         async changeMain(form) {
-            let response = await form.put("/profile/adress");
+            let response = await http.put("/profile/adress/main", form, {
+                errorStub: {
+                    text: "Не удалось изменить основной адрес",
+                    importance: "danger",
+                    fallback: false,
+                },
+            });
+            return response.data;
+        },
+
+        async add(form) {
+            let response = await form.post("/profile/adress");
+            return response.data;
+        },
+
+        async delete(id) {
+            let response = await http.delete(`/profile/adress/${id}`, {
+                errorStub: {
+                    text: "Не удалось удалить адрес",
+                    importance: "danger",
+                    fallback: false,
+                },
+            });
             return response.data;
         },
     },

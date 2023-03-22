@@ -19,7 +19,7 @@ class CheckCountStore implements Rule
         return $value <= $this->count;
     }
 
-    public function message()
+    public function message() : callable
     {
         return trans('validation.checkCountStore');
     }

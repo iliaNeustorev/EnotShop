@@ -42,14 +42,19 @@
                             <span class="has-text-info">Профиль создан:</span>
                             {{ user.created_at }}
                         </p>
-                        <AppAdresses />
+                        <AppAdresses v-show="adresses" />
                         <div class="buttons">
                             <router-link
                                 class="button is-success"
                                 :to="{ name: 'profile.edit' }"
                                 >Редактировать</router-link
                             >
-                            <button class="button is-info">Адреса</button>
+                            <button
+                                class="button is-info"
+                                @click="showAdresses"
+                            >
+                                Адреса
+                            </button>
                             <button class="button is-warning">
                                 Сменить пароль
                             </button>
@@ -65,17 +70,25 @@
 </template>
 <script>
 import AppStatus from "@/components/auth/Status.vue";
-import AppAdresses from "@/components/profile/Adresses.vue";
+import AppAdresses from "@/components/profile/adresses/All.vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
     components: { AppStatus, AppAdresses },
+    data: () => ({
+        adresses: false,
+    }),
     computed: {
         ...mapGetters("userModule", ["user"]),
         mainAdress() {
             return this.user.mainAdress ?? "Не задан";
         },
     },
-    methods: { ...mapActions("userModule", ["getFull"]) },
+    methods: {
+        ...mapActions("userModule", ["getFull"]),
+        showAdresses() {
+            this.adresses = !this.adresses;
+        },
+    },
     async created() {
         await this.getFull();
     },

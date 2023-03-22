@@ -6,7 +6,7 @@
                 :id="id"
                 ref="first"
                 class="input"
-                :class="emptyFieldClass ?? inputClasses"
+                :class="[inputClasses, className]"
                 :type="type"
                 :name="name"
                 :placeholder="placeholder"

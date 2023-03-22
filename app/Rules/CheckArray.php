@@ -6,14 +6,11 @@ use Illuminate\Contracts\Validation\Rule;
 
 class CheckArray implements Rule
 {
-    protected string $model;
-    protected bool $checkKeys;
-
-    public function __construct(string $model, bool $checkKeys = false)
-    {
-        $this->model = $model;
-        $this->checkKeys = $checkKeys;
-    }
+   
+    public function __construct( 
+        protected string $model,  
+        protected bool $checkKeys = false
+        ) {}
 
     public function passes($attribute, $array) : bool
     {

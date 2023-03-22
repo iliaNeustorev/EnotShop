@@ -4,6 +4,7 @@ export default {
         name: { type: String, required: true },
         label: { type: String, required: false },
         placeholder: { type: String, required: false },
+        className: { type: String, default: "" },
         iconName: { type: String, required: false },
         objectValidation: {
             type: Object,
@@ -37,9 +38,7 @@ export default {
             return this.form.errors.has(this.name);
         },
         emptyFieldClass() {
-            if (this.emptyField && !this.hasError && !this.validation) {
-                return "is-link";
-            }
+            return this.emptyField && !this.hasError && !this.validation;
         },
         emptyField() {
             return !this.form[this.name]?.length;
@@ -48,6 +47,7 @@ export default {
             return {
                 "is-danger": this.hasError || !this.validation,
                 "is-success": this.validation,
+                "is-link": this.emptyFieldClass,
             };
         },
         errorText() {

@@ -1,15 +1,24 @@
 <template>
-    <label class="radio">
-        <input type="radio" :value="value" :checked="checked" />
-        {{ label }}
-    </label>
+    <div class="control">
+        <label class="radio">
+            <input
+                type="radio"
+                name="group"
+                :value="modelValue"
+                :checked="checked"
+                @input="$emit('update:modelValue', $event.target.value)"
+            />
+            {{ label }}
+        </label>
+        <slot></slot>
+    </div>
 </template>
 <script>
 export default {
-    emits: ["send-form"],
+    emits: ["update:modelValue"],
     props: {
         checked: { type: Boolean, default: false },
-        value: { type: String, required: true },
+        modelValue: { type: String, required: false },
         label: { type: String, required: true },
     },
 };

@@ -4,12 +4,10 @@ namespace App\Rules;
 
 class CheckArrayCountStore extends CheckCountStore 
 {
-    protected string $model;
 
-    public function __construct(string $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        protected string $model
+        ) {}
 
     public function passes($attribute, $array) : bool
     {

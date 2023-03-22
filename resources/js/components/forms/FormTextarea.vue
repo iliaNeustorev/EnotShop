@@ -7,7 +7,7 @@
                 ref="first"
                 class="textarea"
                 :name="name"
-                :class="emptyFieldClass ?? inputClasses"
+                :class="[inputClasses, className]"
                 :placeholder="placeholder"
                 :rows="row"
                 @change="validationField"
