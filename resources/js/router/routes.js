@@ -5,8 +5,9 @@ import Contacts from "../views/Contacts.vue";
 import Products from "../views/product/Products.vue";
 import Product from "../views/product/One.vue";
 import Cart from "../views/Cart.vue";
-import ProfileMain from "../views/Profile/Main.vue";
-import ProfileEdit from "../views/Profile/Edit.vue";
+import ProfileMain from "../views/profile/Main.vue";
+import ProfileEdit from "../views/profile/Edit.vue";
+import ProfilePassword from "../views/profile/Password.vue";
 
 export default function () {
     const routes = [
@@ -54,6 +55,11 @@ export default function () {
                     path: "edit",
                     name: "profile.edit",
                     component: ProfileEdit,
+                },
+                {
+                    path: "password",
+                    name: "profile.password",
+                    component: ProfilePassword,
                 },
             ],
         },

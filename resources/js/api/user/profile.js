@@ -7,6 +7,10 @@ export default (http) => ({
         let response = await profile.put("/profile/edit");
         return response.data;
     },
+    async changePassword(form) {
+        let response = await form.put("/profile/changePassword");
+        return response.data;
+    },
     adress: {
         async get() {
             let response = await http.get("/profile/adress", {
@@ -42,6 +46,11 @@ export default (http) => ({
                     fallback: false,
                 },
             });
+            return response.data;
+        },
+
+        async edit(form, id) {
+            let response = await form.put(`/profile/adress/${id}`);
             return response.data;
         },
     },

@@ -17,6 +17,10 @@ return [
         'type' => 'info',
         'text' => 'Ссылка для сброса пароля отправлена на почту'
     ],
+    'password.change' => [
+        'type' => 'primary',
+        'text' => 'Пароль успешно изменен'
+    ],
     'auth.verify' => [
         'type' => 'success',
         'text' => 'Аккаунт активирован'

@@ -8,12 +8,12 @@
             class="panel-tabs is-flex is-justify-content-space-around is-flex-wrap-wrap"
         >
             <router-link
-                :to="{ name: 'profile' }"
+                v-for="link in links"
+                :key="link.name"
+                :to="{ name: link.routeName }"
                 exact-active-class="is-active"
-                >Профиль</router-link
+                >{{ link.name }}</router-link
             >
-            <a>Заказы</a>
-            <a>Смена пароля</a>
         </p>
         <AppVerifyEmail />
         <div
@@ -33,7 +33,13 @@ import AppVerifyEmail from "@/components/auth/SendVerifyEmail.vue";
 import AppPersonalDiscount from "@/components/profile/PersonalDiscount.vue";
 export default {
     data() {
-        return {};
+        return {
+            links: [
+                { routeName: "profile", name: "Профиль" },
+                { routeName: "profile", name: "Заказы" },
+                { routeName: "profile.password", name: "Смена пароля" },
+            ],
+        };
     },
     components: { AppLogout, AppVerifyEmail, AppPersonalDiscount, AppStatus },
     computed: {

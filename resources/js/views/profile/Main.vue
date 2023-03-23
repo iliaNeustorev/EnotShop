@@ -42,7 +42,9 @@
                             <span class="has-text-info">Профиль создан:</span>
                             {{ user.created_at }}
                         </p>
-                        <AppAdresses v-show="adresses" />
+                        <transition name="fade">
+                            <AppAdresses v-show="adresses" />
+                        </transition>
                         <div class="buttons">
                             <router-link
                                 class="button is-success"
@@ -55,9 +57,11 @@
                             >
                                 Адреса
                             </button>
-                            <button class="button is-warning">
-                                Сменить пароль
-                            </button>
+                            <router-link
+                                class="button is-warning"
+                                :to="{ name: 'profile.password' }"
+                                >Сменить пароль</router-link
+                            >
                             <button class="button is-danger">
                                 Удалить профиль
                             </button>
@@ -94,3 +98,13 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.fade-enter-from {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    transition: opacity 0.5s;
+}
+</style>

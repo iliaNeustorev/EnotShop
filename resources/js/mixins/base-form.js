@@ -62,6 +62,9 @@ export default {
             this.validationField();
         },
     },
+    mounted() {
+        this.validationField();
+    },
     methods: {
         validationField() {
             return this.$emit("validation-field", {

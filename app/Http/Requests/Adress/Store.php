@@ -24,6 +24,6 @@ class Store extends FormRequest
 
     public function getCountEntry() : bool
     {
-        return request()->user()->adresses()->count() < 5;
+        return request()->user()->adresses()->count() < config('limit-user.adresses');
     }
 }

@@ -6,7 +6,7 @@
                 name="group"
                 :value="modelValue"
                 :checked="checked"
-                @input="$emit('update:modelValue', $event.target.value)"
+                @input="changed($event)"
             />
             {{ label }}
         </label>
@@ -15,11 +15,17 @@
 </template>
 <script>
 export default {
-    emits: ["update:modelValue"],
+    emits: ["update:modelValue", "change-main"],
     props: {
         checked: { type: Boolean, default: false },
         modelValue: { type: String, required: false },
         label: { type: String, required: true },
+    },
+    methods: {
+        changed(e) {
+            this.$emit("update:modelValue", e.target.value);
+            this.$emit("change-main");
+        },
     },
 };
 </script>

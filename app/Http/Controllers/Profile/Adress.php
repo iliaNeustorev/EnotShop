@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profile;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Adress as ModelsAdress;
+use App\Http\Requests\Adress\Edit as AdressEditRequest;
 use App\Http\Requests\Adress\Main as AdressMainRequest;
 use App\Http\Requests\Adress\Store as AdressStoreRequest;
 
@@ -18,7 +20,7 @@ class Adress extends Controller
     {
         $adresses = Auth::user()->adresses->sortByDesc('created_at')->values();
         
-        return ['adresses' => $adresses, 'limit' => 5];
+        return ['adresses' => $adresses, 'limit' => config('limit-user.adresses')];
     }
 
     /* 
@@ -27,11 +29,22 @@ class Adress extends Controller
     public function store(AdressStoreRequest $request) : JsonResponse
     {
         $data = $request->validated();
-        $newAdresses = User::findOrfail($request->user()->id)->adresses()->create(['text' => $data['text']]);
+        $newAdresses = $request->user()->adresses()->create(['text' => $data['text']]);
         if($data['main'] ?? false) {
             $this->updateMain($newAdresses->id, $request);
         }
         
+        return response()->json(['OK'], 200);
+    }
+
+    /* 
+        Реадактировать текст адреса пользователя 
+    */
+    public function update(AdressEditRequest $request, int $id) : JsonResponse
+    {
+        $data = $request->validated();
+        ModelsAdress::findOrfail($id)->update($data);
+
         return response()->json(['OK'], 200);
     }
 
@@ -61,8 +74,8 @@ class Adress extends Controller
      */
     protected function updateMain(int $id, Request $request) : void
     {
-        $userAdresses = User::findOrfail($request->user()->id)->adresses();
+        $userAdresses = $request->user()->adresses();
         $userAdresses->update(['main' => false]);
-        $userAdresses->where('id',$id)->update(['main' => true]);
+        $userAdresses->where('id', $id)->update(['main' => true]);
     }
 }
