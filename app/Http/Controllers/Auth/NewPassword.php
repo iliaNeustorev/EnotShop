@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View ;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Password;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Http\Requests\Auth\PasswordReset as PasswordResetRequest;
 
 class NewPassword extends Controller
@@ -16,7 +17,7 @@ class NewPassword extends Controller
      return view('auth.reset-password', ['token' => $token]);
    }
 
-   public function store(PasswordResetRequest $request)
+   public function store(PasswordResetRequest $request) : RedirectResponse
    {
       $data = $request->validated();
       $status = Password::reset(

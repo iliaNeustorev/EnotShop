@@ -1,9 +1,10 @@
 <template>
     <div class="container">
-        <form class="box" @submit.prevent="sendForm">
+        <div class="box">
             <div class="column is-half">
                 <form-input-component
                     v-for="input in inputs"
+                    ref="inputs"
                     :key="input.name"
                     :form="changePassword"
                     :name="input.name"
@@ -13,13 +14,17 @@
                     :object-validation="input.validation"
                     @validation-field="validationField($event, input.name)"
                 />
-                <AppFormControls
-                    button-name="Сменить пароль"
-                    :validation="validationForm"
-                    :loading="loading"
-                />
+                <div class="buttons is-right mt-4">
+                    <AppFormControls
+                        button-name="Сменить пароль"
+                        :validation="validationForm"
+                        :loading="loading"
+                        @click="sendForm"
+                    />
+                    <AppButtonBack />
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </template>
 
@@ -102,6 +107,9 @@ export default {
                 }
             }
         },
+    },
+    mounted() {
+        this.$refs.inputs[0].$refs.first.focus();
     },
 };
 </script>

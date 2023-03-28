@@ -7,11 +7,13 @@
                 >
                     <div class="media-left">
                         <figure class="image is-128x128">
-                            <img
-                                class="is-rounded"
-                                :src="user.img"
-                                alt="Аватар"
-                            />
+                            <router-link :to="{ name: 'profile.avatar' }"
+                                ><img
+                                    class="is-rounded"
+                                    :src="`/storage/img/profile/` + user.img"
+                                    alt="Аватар"
+                                    title="Редактировать аватар"
+                            /></router-link>
                         </figure>
                     </div>
                     <div class="media-content">
@@ -62,9 +64,7 @@
                                 :to="{ name: 'profile.password' }"
                                 >Сменить пароль</router-link
                             >
-                            <button class="button is-danger">
-                                Удалить профиль
-                            </button>
+                            <AppDeleteProfile :id="user.id" />
                         </div>
                     </div>
                 </div>
@@ -75,9 +75,10 @@
 <script>
 import AppStatus from "@/components/auth/Status.vue";
 import AppAdresses from "@/components/profile/adresses/All.vue";
+import AppDeleteProfile from "@/components/profile/Delete.vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
-    components: { AppStatus, AppAdresses },
+    components: { AppStatus, AppAdresses, AppDeleteProfile },
     data: () => ({
         adresses: false,
     }),

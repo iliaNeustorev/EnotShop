@@ -34,6 +34,7 @@
 </template>
 <script>
 import AppFormControls from "@/components/forms/buttons/Controls.vue";
+
 export default {
     components: { AppFormControls },
     props: {
@@ -83,10 +84,10 @@ export default {
             }
         },
         showForm() {
-            this.show = !this.show;
+            return (this.show = !this.show);
         },
         validationField(elem) {
-            this.input.validation.valid = elem.currentRule;
+            return (this.input.validation.valid = elem.currentRule);
         },
     },
 };

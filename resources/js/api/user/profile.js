@@ -11,6 +11,32 @@ export default (http) => ({
         let response = await form.put("/profile/changePassword");
         return response.data;
     },
+    async deleteProfile(id) {
+        let response = await http.delete(`/profile/${id}`, {
+            errorStub: {
+                text: "Не удалось удалить профиль",
+                importance: "danger",
+                fallback: false,
+            },
+        });
+        return response.data;
+    },
+    async changeAvatar(file) {
+        await file.post("/profile/changeAvatar");
+    },
+    async deleteAvatar() {
+        await http.put(
+            "/profile/deleteAvatar",
+            {},
+            {
+                errorStub: {
+                    text: "Ошибка.Удалить аватар не удалось",
+                    fallback: false,
+                    importance: "danger",
+                },
+            }
+        );
+    },
     adress: {
         async get() {
             let response = await http.get("/profile/adress", {

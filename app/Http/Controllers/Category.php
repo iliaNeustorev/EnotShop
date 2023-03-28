@@ -38,13 +38,13 @@ class Category extends Controller
     {
         $category = ModelsCategory::orderBy('name')->where('slug', $slug)->firstOrfail();
         $products = $category
-                        ->products()
-                        ->sumDiscount()
-                        ->get()
-                        ->transform(function(ModelsProduct $product){
-                            $product->image = $product->images()->first()->url;
-                            return $product;
-                        });
+                    ->products()
+                    ->sumDiscount()
+                    ->get()
+                    ->transform(function(ModelsProduct $product){
+                        $product->image = $product->images()->first()->url;
+                        return $product;
+                    });
         return [
             'products' => $products, 
             'categoryName' => $category->name, 

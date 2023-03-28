@@ -14,15 +14,15 @@ import initHttpErrorsHandler from "@/connectors/http-errors-handler";
 import createComponentPlugin from "./plugins/init-components";
 
 export default (context) => {
-    const { http, api } = createHttpPlugin();
+    const httpPlugin = createHttpPlugin();
     const csrfPlugin = createCsrfPlugin();
     const redirectPlugin = createRedirectPlugin(context.routes);
     const storageHelpers = createStorageHelpers();
-    const formPlugin = createFormPlugin(Form, http);
-    const store = createStore(api, storageHelpers);
+    const formPlugin = createFormPlugin(Form, httpPlugin.http);
+    const store = createStore(httpPlugin.api, storageHelpers);
     const router = createRouter(store);
     const globalComponentsPlugin = createComponentPlugin();
-    initHttpErrorsHandler(http, store);
+    initHttpErrorsHandler(httpPlugin.http, store);
 
     store.dispatch("userModule/init", context.user);
     store.dispatch("cartModule/load");
@@ -34,11 +34,10 @@ export default (context) => {
         .use(redirectPlugin)
         .use(formPlugin)
         .use(globalComponentsPlugin)
+        .use(httpPlugin)
         .use(mdiVue, {
             icons: mdijs,
         });
-
-    app.config.globalProperties["$api"] = api;
 
     return { app, router };
 };

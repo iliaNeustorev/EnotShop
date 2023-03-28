@@ -13,7 +13,7 @@ class Main extends Controller
     public function showSpa(Request $request) : View
     {
         $user = $request->user();
-        $img = $user?->image->url;
+        $img = $user?->image?->name;
         $user = $user?->toArray();
         $filtredUser = collect($user)->put('img', $img)->only(['id', 'name', 'email_verified_at', 'blocked', 'img']);
         $routes = [ 

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\Register as RegisterRequest;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Register extends Controller
 {
@@ -19,7 +20,7 @@ class Register extends Controller
         return view('auth.register');
     }
 
-    public function store(RegisterRequest $request)
+    public function store(RegisterRequest $request) : RedirectResponse
     {
 
         $data = $request->validated();

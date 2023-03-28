@@ -29,5 +29,6 @@ Artisan::command('test', function () {
     // Promo::create(['name'=>'dry','size_discount'=>10]);
 //    $product = Product::findOrfail(11);
 // User::findOrFail(6)->discount()->create(['discount' => 15]);
-User::findOrFail(6)->adresses()->create(['text' => 'Адрес three']);
+// User::findOrFail(6)->adresses()->create(['text' => 'Адрес three']);
+User::onlyTrashed()->findOrFail(7)->restore();
 })->purpose('OK');

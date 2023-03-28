@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Password;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PasswordReset extends Controller
 {
@@ -15,7 +16,7 @@ class PasswordReset extends Controller
         return view('auth.forgot-password');
     }
 
-    public function store(Request $request)
+    public function store(Request $request) : RedirectResponse
     {
         $request->validate(['email' => 'required|email']);
 

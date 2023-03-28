@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="box">
-            <form @submit.prevent="editProfile" class="column is-half">
+            <div class="column is-half">
                 <form-input-component
                     v-for="input in inputs"
                     :key="input.name"
@@ -14,12 +14,14 @@
                 />
                 <div class="buttons is-right mt-4">
                     <AppFormControls
+                        @click="editProfile"
                         button-name="Принять изменения"
                         :validation="validationForm"
                         :loading="loading"
                     />
+                    <AppButtonBack />
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </template>

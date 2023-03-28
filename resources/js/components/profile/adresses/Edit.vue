@@ -9,7 +9,7 @@
         ></template>
         <template v-slot:content
             ><div class="field has-addons">
-                <div class="control">
+                <div class="control" :class="$style['width-input']">
                     <form-input-component
                         :form="editAdress"
                         :name="input.name"
@@ -91,3 +91,9 @@ export default {
     },
 };
 </script>
+
+<style module>
+.width-input {
+    min-width: fit-content;
+}
+</style>

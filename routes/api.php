@@ -40,6 +40,9 @@ Route::prefix('profile')->middleware('auth')->group(function() {
     Route::put('/edit', [ProfileController::class, 'edit']);
     Route::get('/discount', [ProfileController::class, 'getDiscount']);
     Route::put('/changePassword', [ProfileController::class, 'changePassword']);
+    Route::delete('/{id}', [ProfileController::class, 'destroy']);
+    Route::put('/changeAvatar', [ProfileController::class, 'changeAvatar']);
+    Route::put('/deleteAvatar', [ ProfileController::class, 'deleteAvatar']);
     Route::put('/adress/main', [ AdressController::class, 'changeMain' ]);
     Route::apiResource('/adress', AdressController::class)->parameters([ 'adress' => 'id' ])->only(['index', 'update', 'store', 'destroy']);
 });

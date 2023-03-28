@@ -11,6 +11,7 @@ use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\Login as LoginRequest;
 use App\Models\User as ModelsUser;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Sessions extends Controller
 {
@@ -21,7 +22,7 @@ class Sessions extends Controller
     /**
      * залогинится
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request) : RedirectResponse
     {
         $request->authenticate();
         $request->session()->regenerate();
@@ -30,7 +31,7 @@ class Sessions extends Controller
       /**
      * разлогинится
      */
-    public function logout(Request $request)
+    public function logout(Request $request) : RedirectResponse
     {
         Auth::guard('web')->logout();
         $request->session()->invalidate();
@@ -45,7 +46,7 @@ class Sessions extends Controller
     {
         $user = request()->user();
         $mainAdress = $user->adresses()->main()->text ?? null;
-        $user = collect($user)->put('mainAdress', $mainAdress);
+        $user = collect($user)->put('mainAdress', $mainAdress)->put('img', $user->image->name);
         // $user['admin'] = Gate::check('admin');
         // $user['likes'] = $request->user()->likes()->where('status', LikeStatus::LIKE)->pluck('likable_type','likable_id');
         // $user['dislikes'] = $request->user()->likes()->where('status', LikeStatus::DISLIKE)->pluck('likable_type','likable_id');

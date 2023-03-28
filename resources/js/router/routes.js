@@ -8,6 +8,7 @@ import Cart from "../views/Cart.vue";
 import ProfileMain from "../views/profile/Main.vue";
 import ProfileEdit from "../views/profile/Edit.vue";
 import ProfilePassword from "../views/profile/Password.vue";
+import ProfileAvatar from "../views/profile/Avatar.vue";
 
 export default function () {
     const routes = [
@@ -60,6 +61,11 @@ export default function () {
                     path: "password",
                     name: "profile.password",
                     component: ProfilePassword,
+                },
+                {
+                    path: "avatar",
+                    name: "profile.avatar",
+                    component: ProfileAvatar,
                 },
             ],
         },
