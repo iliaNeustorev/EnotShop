@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +19,6 @@ class Adress extends Controller
     public function index() : array
     {
         $adresses = Auth::user()->adresses->sortByDesc('created_at')->values();
-        
         return ['adresses' => $adresses, 'limit' => config('limit-user.adresses')];
     }
 
@@ -28,10 +27,11 @@ class Adress extends Controller
     */
     public function store(AdressStoreRequest $request) : JsonResponse
     {
+        $user = Auth::user();
         $data = $request->validated();
-        $newAdresses = $request->user()->adresses()->create(['text' => $data['text']]);
+        $newAdresses = User::findOrfail($user->id)->adresses()->create(['text' => $data['text']]);
         if($data['main'] ?? false) {
-            $this->updateMain($newAdresses->id, $request);
+            $this->updateMain($newAdresses->id, $user);
         }
         
         return response()->json(['OK'], 200);
@@ -51,9 +51,10 @@ class Adress extends Controller
      /* 
         Удалить адрес пользователя 
      */
-    public function destroy(int $id, Request $request) : JsonResponse
+    public function destroy(int $id) : JsonResponse
     {
-        $request->user()->adresses()->findOrfail($id)->delete();
+        $user = Auth::user();
+        User::findOrfail($user->id)->adresses()->findOrfail($id)->delete();
 
         return response()->json(['OK'], 200);
     }
@@ -63,8 +64,9 @@ class Adress extends Controller
      */
     public function changeMain(AdressMainRequest $request) : JsonResponse
     {
+        $user = Auth::user();
         $data = $request->validated();
-        $this->updateMain( $data['main'], $request);
+        $this->updateMain($data['main'], $user);
 
         return response()->json(['OK'], 200);
     }
@@ -72,9 +74,9 @@ class Adress extends Controller
      /* 
         Вспомогательный метод для обнуления основного адреса пользователя 
      */
-    protected function updateMain(int $id, Request $request) : void
+    protected function updateMain(int $id, User $user) : void
     {
-        $userAdresses = $request->user()->adresses();
+        $userAdresses = $user->adresses();
         $userAdresses->update(['main' => false]);
         $userAdresses->where('id', $id)->update(['main' => true]);
     }

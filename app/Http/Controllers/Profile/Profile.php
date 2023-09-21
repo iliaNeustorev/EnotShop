@@ -32,8 +32,9 @@ class Profile extends Controller
     */
     public function edit(ProfileEditRequest $request) : JsonResponse
     {
+        $user = Auth::user();
         $data = $request->validated();
-        User::findOrfail(auth()->user()->id)->update($data);
+        User::findOrfail($user->id)->update($data);
         return response()->json(['OK'], 200);
     }
 
@@ -57,7 +58,7 @@ class Profile extends Controller
      */
     public function changeAvatar(ChangeAvatarRequest $request) : JsonResponse
     {
-        $user = $request->user();
+        $user = Auth::user();
         $file = $request->picture;
         $currentPictureName = $user->image->name;
         if($currentPictureName != 'nopicture.png')
@@ -65,7 +66,7 @@ class Profile extends Controller
                 Storage::delete("public/img/profile/$currentPictureName");
             }
         $fileName = $request->setPictureName($file);
-        $user->image()->update(['name' => $fileName]);
+        User::findOrfail($user->id)->image()->update(['name' => $fileName]);
         Storage::putFileAs('public/img/profile/', $file, $fileName);
 
         return response()->json(['OK'], 200);
@@ -76,13 +77,13 @@ class Profile extends Controller
     */
     public function deleteAvatar() : JsonResponse
     {
-        $user = request()->user();
+        $user = Auth::user();
         $currentPictureName = $user->image->name;
         if($currentPictureName != 'nopicture.png')
         {
             Storage::delete("public/img/profile/$currentPictureName");
         }
-        $user->image()->update(['name' => 'nopicture.png']);
+        User::findOrfail($user->id)->image()->update(['name' => 'nopicture.png']);
 
         return response()->json(['OK'], 200);
     }
