@@ -4,7 +4,7 @@
             <p class="panel-heading">
                 Регистрация
             </p>
-            <x-form action="{{ route('register') }}">
+            <x-form action="{{ route('register.store') }}">
                 <x-forms.custom-input name="name" type="text" placeholder="Введите имя" label="Имя" icon="fas fa-user"/>
                 <x-forms.custom-input name="email" type="email" placeholder="Введите почту" label="Email" icon="fas fa-envelope"/>
                 <x-forms.custom-input name="password" type="password" placeholder="Введите пароль" label="Пароль" icon="fas fa-lock"/>

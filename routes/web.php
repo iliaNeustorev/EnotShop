@@ -13,7 +13,7 @@ Route::controller(SessionsController::class)->group(function() {
         Route::get('auth/login', 'create')->name('login');
         Route::post('auth/login', 'store');
         Route::get('auth/register', [RegisterController::class, 'create'])->name('register');
-        Route::post('auth/register', [RegisterController::class, 'store']);
+        Route::post('auth/register', [RegisterController::class, 'store'])->name('register.store');
     });
     Route::middleware('auth')->group(function() {
         Route::post('/auth/logout', 'logout');
